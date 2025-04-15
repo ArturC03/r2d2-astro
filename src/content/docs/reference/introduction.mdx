@@ -1,0 +1,106 @@
+---
+title: Introduction to R2D2
+description: Learn about R2D2's core concepts and features
+---
+
+R2D2 is a modern programming language designed with safety, expressiveness, and reliability in mind. It compiles to JavaScript, making it a perfect choice for web applications, server-side development, and more.
+
+## Core Features
+
+### Type System
+
+R2D2's type system helps catch errors at compile time while maintaining a clean and expressive syntax:
+
+```typescript
+// Built-in types
+let age: i32 = 25;
+let price: f64 = 99.99;
+let name: string = "R2D2";
+let isActive: bool = true;
+
+// Arrays and collections
+let numbers: i32[] = [1, 2, 3, 4, 5];
+let scores: Map<string, i32> = new Map();
+```
+
+### Error Handling
+
+Built-in Result type for explicit error handling:
+
+```typescript
+fn divide(a: f64, b: f64): Result<f64, string> {
+  if b == 0 {
+    return error("Division by zero");
+  }
+  return ok(a / b);
+}
+
+// Using match for error handling
+match divide(10, 2) {
+  ok(result) => console.log("Result:", result),
+  error(msg) => console.error("Error:", msg)
+}
+```
+
+### Modules & Interfaces
+
+Organize your code with modules and define contracts with interfaces:
+
+```typescript
+interface Logger {
+  fn log(message: string): void;
+  fn error(message: string): void;
+}
+
+module ConsoleLogger implements Logger {
+  fn log(message: string): void {
+    console.log("[INFO]", message);
+  }
+  
+  fn error(message: string): void {
+    console.error("[ERROR]", message);
+  }
+}
+```
+
+### Functions
+
+First-class functions with type inference and pattern matching:
+
+```typescript
+// Regular function definition
+fn add(a: i32, b: i32): i32 {
+  return a + b;
+}
+
+// Concise function with type inference
+fn multiply(a: i32, b: i32) = a * b;
+
+// Higher-order functions
+fn apply(f: fn(i32, i32) -> i32, x: i32, y: i32): i32 {
+  return f(x, y);
+}
+```
+
+### Async Programming
+
+Built-in support for asynchronous programming:
+
+```typescript
+async fn fetchData(url: string): Result<string, string> {
+  try {
+    let response = await fetch(url);
+    let text = await response.text();
+    return ok(text);
+  } catch (e) {
+    return error("Failed to fetch data: " + e.message);
+  }
+}
+```
+
+## Next Steps
+
+- Follow the [Quick Start Guide](/guides/quick-start/) to write your first R2D2 program
+- Learn about [installing R2D2](/guides/installation/) on your system
+- Explore [example projects](/examples/) to see R2D2 in action
+- Browse the [Standard Library](/reference/stdlib/) documentation 

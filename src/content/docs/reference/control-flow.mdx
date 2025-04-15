@@ -1,0 +1,203 @@
+---
+title: Control Flow
+description: Complete reference for control flow statements in R2D2
+---
+
+## If Statements
+
+Basic conditional branching:
+
+```typescript
+module conditionals {
+  fn check_number(x int) {
+    if x > 0 {
+      console.log("Positive");
+    } else if x < 0 {
+      console.log("Negative");
+    } else {
+      console.log("Zero");
+    }
+  }
+
+  fn check_age(age int) {
+    var message string = if age >= 18 {
+      "Adult"
+    } else {
+      "Minor"
+    };
+    console.log(message);
+  }
+}
+```
+
+## For Loops
+
+R2D2 supports C-style for loops:
+
+```typescript
+module loops {
+  fn count_up() {
+    // Basic for loop
+    for var i int = 0; i < 5; i++ {
+      console.log(i);
+    }
+  }
+
+  fn sum_array(numbers []int) {
+    var total int = 0;
+    // Array iteration
+    for var i int = 0; i < numbers.length(); i++ {
+      total += numbers[i];
+    }
+    return total;
+  }
+}
+```
+
+## While Loops
+
+While loops continue until a condition becomes false:
+
+```typescript
+module while_examples {
+  fn countdown(start int) {
+    var count int = start;
+    while count > 0 {
+      console.log(count);
+      count--;
+    }
+    console.log("Liftoff!");
+  }
+
+  fn read_until_valid() {
+    var input string = "";
+    while input.length() == 0 {
+      input = console.read_line();
+    }
+    return input;
+  }
+}
+```
+
+## Break and Continue
+
+Control flow within loops:
+
+```typescript
+module loop_control {
+  fn find_first_positive(numbers []int) {
+    for var i int = 0; i < numbers.length(); i++ {
+      if numbers[i] <= 0 {
+        continue;  // Skip non-positive numbers
+      }
+      return numbers[i];  // Return first positive number
+    }
+    return 0;  // No positive numbers found
+  }
+
+  fn find_in_matrix(matrix [][]int, target int) {
+    for var i int = 0; i < matrix.length(); i++ {
+      for var j int = 0; j < matrix[i].length(); j++ {
+        if matrix[i][j] == target {
+          console.log("Found at:", i, j);
+          break;  // Exit inner loop
+        }
+      }
+    }
+  }
+}
+```
+
+## Match Expressions
+
+Pattern matching with match:
+
+```typescript
+module matching {
+  fn describe_number(x int) {
+    match x {
+      0 => console.log("Zero"),
+      1 => console.log("One"),
+      2 => console.log("Two"),
+      _ => console.log("Many")
+    }
+  }
+
+  fn get_day_type(day string) {
+    return match day {
+      "Saturday" | "Sunday" => "Weekend",
+      "Monday" ... "Friday" => "Weekday",
+      _ => "Invalid day"
+    };
+  }
+}
+```
+
+## Error Handling
+
+Using match for error handling:
+
+```typescript
+module error_handling {
+  fn divide(a int, b int) {
+    if b == 0 {
+      return error("Division by zero");
+    }
+    return ok(a / b);
+  }
+
+  fn safe_divide(a int, b int) {
+    match divide(a, b) {
+      ok(result) => console.log("Result:", result),
+      error(msg) => console.log("Error:", msg)
+    }
+  }
+
+  fn main() {
+    safe_divide(10, 2);  // Prints: Result: 5
+    safe_divide(10, 0);  // Prints: Error: Division by zero
+  }
+}
+```
+
+## Async Control Flow
+
+Control flow with async operations:
+
+```typescript
+module async_flow {
+  fn async fetch_all(urls []string) {
+    for var i int = 0; i < urls.length(); i++ {
+      var response = await http.get(urls[i]);
+      if response.status != 200 {
+        continue;
+      }
+      var data = await response.text();
+      console.log("Data from", urls[i], ":", data);
+    }
+  }
+
+  fn async retry_operation(operation fn() error) {
+    var max_attempts int = 3;
+    for var attempt int = 1; attempt <= max_attempts; attempt++ {
+      match await operation() {
+        ok(_) => break,
+        error(e) => {
+          if attempt == max_attempts {
+            console.log("Failed after", max_attempts, "attempts");
+          } else {
+            console.log("Retrying...");
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Next Steps
+
+1. Learn about [Functions](/reference/functions/)
+2. Explore [Types](/reference/types/)
+3. See [Error Handling](/reference/error-handling/)
+4. Check the [Standard Library](/reference/stdlib/) 

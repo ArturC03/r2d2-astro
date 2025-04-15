@@ -1,0 +1,205 @@
+---
+title: Functions
+description: Complete reference for functions in R2D2
+---
+
+## Function Declarations
+
+Functions in R2D2 are declared using the `fn` keyword and must be inside a module:
+
+```typescript
+module calculator {
+  fn add(a int, b int) {
+    return a + b;
+  }
+
+  fn greet(name string) {
+    console.log("Hello,", name);
+  }
+
+  fn main() {
+    var result = add(5, 3);
+    greet("R2D2");
+  }
+}
+```
+
+## Parameters
+
+### Basic Parameters
+
+Parameters require explicit type annotations:
+
+```typescript
+module parameters {
+  fn multiply(x int, y int) {
+    return x * y;
+  }
+
+  fn concat(str1 string, str2 string) {
+    return str1 + str2;
+  }
+}
+```
+
+### Optional Parameters
+
+Optional parameters are denoted with a `?` after the parameter name:
+
+```typescript
+module greeting {
+  fn greet(name string, title? string) {
+    if title != null {
+      console.log("Hello,", title, name);
+    } else {
+      console.log("Hello,", name);
+    }
+  }
+
+  fn main() {
+    greet("John");           // Prints: Hello, John
+    greet("John", "Mr.");    // Prints: Hello, Mr. John
+  }
+}
+```
+
+### Default Parameters
+
+Parameters can have default values:
+
+```typescript
+module counter {
+  fn count_from(start int = 0, end int = 10) {
+    for var i int = start; i < end; i++ {
+      console.log(i);
+    }
+  }
+
+  fn main() {
+    count_from();          // Counts 0 to 9
+    count_from(5);         // Counts 5 to 9
+    count_from(1, 5);      // Counts 1 to 4
+  }
+}
+```
+
+### Rest Parameters
+
+Rest parameters allow functions to accept any number of arguments:
+
+```typescript
+module math {
+  fn sum(...numbers []int) {
+    var total int = 0;
+    for var i int = 0; i < numbers.length(); i++ {
+      total += numbers[i];
+    }
+    return total;
+  }
+
+  fn main() {
+    var result = sum(1, 2, 3, 4, 5);  // Returns 15
+  }
+}
+```
+
+## Return Values
+
+Functions can return single or multiple values:
+
+```typescript
+module math {
+  // Single return value
+  fn square(x int) {
+    return x * x;
+  }
+
+  // Multiple return values
+  fn divide(a int, b int) {
+    var quotient = a / b;
+    var remainder = a % b;
+    return quotient, remainder;
+  }
+
+  fn main() {
+    var q, r = divide(10, 3);
+    console.log("Quotient:", q);    // Prints: Quotient: 3
+    console.log("Remainder:", r);   // Prints: Remainder: 1
+  }
+}
+```
+
+## Function Types
+
+Functions are first-class values in R2D2:
+
+```typescript
+module calculator {
+  // Function type as parameter
+  fn apply(x int, y int, operation fn(int, int)) {
+    return operation(x, y);
+  }
+
+  fn add(a int, b int) {
+    return a + b;
+  }
+
+  fn multiply(a int, b int) {
+    return a * b;
+  }
+
+  fn main() {
+    var sum = apply(5, 3, add);        // Returns 8
+    var product = apply(5, 3, multiply); // Returns 15
+  }
+}
+```
+
+## Async Functions
+
+Async functions are supported for asynchronous operations:
+
+```typescript
+module fetcher {
+  fn async fetch_data(url string) {
+    var response = await http.get(url);
+    return response.text();
+  }
+
+  fn async main() {
+    var data = await fetch_data("https://api.example.com/data");
+    console.log(data);
+  }
+}
+```
+
+## Function Decorators
+
+Decorators can modify or enhance function behavior:
+
+```typescript
+module logging {
+  fn log_decorator(fn_name string) {
+    return fn(target fn()) {
+      return fn() {
+        console.log("Calling function:", fn_name);
+        var result = target();
+        console.log("Function completed:", fn_name);
+        return result;
+      };
+    };
+  }
+
+  @log_decorator("hello")
+  fn hello() {
+    console.log("Hello, world!");
+  }
+}
+```
+
+## Next Steps
+
+1. Learn about [Modules](/reference/modules/)
+2. Explore [Control Flow](/reference/control-flow/)
+3. See [Types](/reference/types/)
+4. Check the [Standard Library](/reference/stdlib/) 

@@ -1,0 +1,98 @@
+---
+title: Installing R2D2
+description: Learn how to install and set up R2D2 on your system
+---
+
+## System Requirements
+
+Before installing R2D2, ensure your system meets these requirements:
+
+- Node.js 16.0 or higher
+- npm 7.0 or higher
+- Git (for version control)
+
+## Installation Steps
+
+### 1. Install via npm
+
+The easiest way to install R2D2 is through npm:
+
+```bash
+npm install -g r2d2-lang
+```
+
+### 2. Verify Installation
+
+Check that R2D2 was installed correctly:
+
+```bash
+r2d2 --version
+```
+
+### 3. Create a New Project
+
+Create a new R2D2 project:
+
+```bash
+r2d2 new my-project
+cd my-project
+```
+
+This will create a new directory with the following structure:
+
+```
+my-project/
+├── src/
+│   └── main.r2d2
+├── package.json
+├── r2d2.config.json
+└── README.md
+```
+
+### 4. Project Setup
+
+Install project dependencies:
+
+```bash
+npm install
+```
+
+## IDE Support
+
+R2D2 provides excellent IDE support through language server extensions:
+
+- VS Code: [R2D2 Language Support](vscode:extension/r2d2-lang)
+- Vim/Neovim: Use with [coc-r2d2](https://github.com/r2d2-lang/coc-r2d2)
+- Other editors: Generic LSP support
+
+## Next Steps
+
+Once you have R2D2 installed, you can:
+
+1. Follow the [Getting Started](/guides/getting-started/) guide
+2. Try the [Interactive Tutorial](/guides/tutorial/)
+3. Browse [Example Projects](/examples/)
+
+## Troubleshooting
+
+### Common Issues
+
+#### Permission Errors
+
+If you encounter permission errors during global installation:
+
+```bash
+sudo npm install -g r2d2-lang
+```
+
+#### Path Issues
+
+If the `r2d2` command is not found, ensure your npm global bin directory is in your PATH.
+
+### Getting Help
+
+If you run into problems:
+
+1. Check our [FAQ](/guides/faq/)
+2. Visit our [GitHub Issues](https://github.com/ArturC03/r2d2/issues)
+3. Join our [Discord Community](https://discord.gg/r2d2-lang) 

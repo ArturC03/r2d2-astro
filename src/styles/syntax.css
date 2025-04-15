@@ -1,0 +1,108 @@
+/* R2D2 Syntax Highlighting Theme */
+:root {
+  /* Syntax highlighting colors */
+  --syntax-keyword: #ff79c6;      /* Pink */
+  --syntax-type: #8be9fd;         /* Light blue */
+  --syntax-string: #f1fa8c;       /* Light yellow */
+  --syntax-comment: #6272a4;      /* Muted blue */
+  --syntax-function: #50fa7b;     /* Light green */
+  --syntax-number: #bd93f9;       /* Purple */
+  --syntax-operator: #ff79c6;     /* Pink */
+  --syntax-punctuation: #f8f8f2;  /* Light gray */
+  --syntax-variable: #f8f8f2;     /* Light gray */
+  --syntax-property: #66d9ef;     /* Light blue */
+}
+
+/* Light theme overrides */
+:root[data-theme="light"] {
+  --syntax-keyword: #2563eb;      /* Blue-600 */
+  --syntax-type: #0ea5e9;         /* Sky-500 */
+  --syntax-string: #ca8a04;       /* Amber-600 */
+  --syntax-comment: #94a3b8;      /* Slate-400 */
+  --syntax-function: #059669;     /* Emerald-600 */
+  --syntax-number: #7c3aed;       /* Violet-600 */
+  --syntax-operator: #db2777;     /* Pink-600 */
+  --syntax-punctuation: #334155;  /* Slate-700 */
+  --syntax-variable: #334155;     /* Slate-700 */
+  --syntax-property: #0ea5e9;     /* Sky-500 */
+}
+
+/* Code block styles */
+pre {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--sl-color-bg);
+  overflow-x: auto;
+}
+
+/* Token styles */
+.token.keyword {
+  color: var(--syntax-keyword);
+}
+
+.token.type {
+  color: var(--syntax-type);
+}
+
+.token.string {
+  color: var(--syntax-string);
+}
+
+.token.comment {
+  color: var(--syntax-comment);
+  font-style: italic;
+}
+
+.token.function {
+  color: var(--syntax-function);
+}
+
+.token.number {
+  color: var(--syntax-number);
+}
+
+.token.operator {
+  color: var(--syntax-operator);
+}
+
+.token.punctuation {
+  color: var(--syntax-punctuation);
+}
+
+.token.variable {
+  color: var(--syntax-variable);
+}
+
+.token.property {
+  color: var(--syntax-property);
+}
+
+/* Line highlighting */
+pre .highlight {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0.25rem;
+}
+
+/* Inline code */
+:not(pre) > code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  background-color: var(--sl-color-bg);
+  color: var(--sl-color-text);
+}
+
+/* Code block title */
+.code-title {
+  background: var(--sl-color-bg-code);
+  color: var(--sl-color-text);
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--sl-color-border);
+  border-radius: 0.5rem 0.5rem 0 0;
+  font-family: var(--sl-font-mono);
+  font-size: 0.9em;
+} 

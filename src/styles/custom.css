@@ -1,0 +1,541 @@
+@import "./syntax.css";
+
+/* Theme colors */
+:root {
+    /* Brand colors - Based on R2D2's technical nature */
+    --primary: #04fc44; /* Original R2D2 green - used sparingly */
+    --primary-dark: #038829; /* For text and interactive elements */
+    --primary-soft: #1a9e47; /* Main theme color - easier on eyes */
+    --primary-light: #e6ffe9; /* Light accents and backgrounds */
+
+    /* Technical accent colors */
+    --keyword: #a404fc; /* For keywords like 'module', 'interface', 'fn' */
+    --type: #fc6404; /* For type annotations (i32, f64, etc.) */
+    --string: #fcb404; /* For string literals */
+    --comment: #7a8084; /* For comments and muted text */
+    --function: #04b4fc; /* For function names and declarations */
+
+    /* Base colors */
+    --dark: #0d1117; /* GitHub-style dark */
+    --dark-200: #161b22;
+    --dark-300: #21262d;
+    --light: #ffffff;
+    --light-200: #f6f8fa; /* GitHub-style light */
+    --light-300: #ebedef;
+}
+
+/* Reset and base styles */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Light theme */
+[data-theme="light"] {
+    /* Backgrounds */
+    --bg-body: var(--light);
+    --bg-nav: var(--light);
+    --bg-sidebar: var(--light-200);
+    --bg-card: var(--light);
+    --bg-code: var(--light-200);
+    --bg-selection: var(--primary-light);
+
+    /* Text colors */
+    --text-body: var(--dark);
+    --text-code: var(--primary-dark);
+    --text-heading: var(--dark);
+    --text-muted: var(--comment);
+
+    /* Interactive elements */
+    --link-color: var(--primary-dark);
+    --link-hover: var(--primary-soft);
+    --btn-primary-bg: var(--primary-soft);
+    --btn-primary-text: var(--light);
+    --btn-secondary-bg: var(--keyword);
+    --btn-secondary-text: var(--light);
+
+    /* Borders */
+    --border-color: var(--light-300);
+    --border-color-hover: var(--primary-soft);
+
+    /* Starlight theme variables */
+    --sl-color-accent: var(--primary-soft);
+    --sl-color-accent-low: var(--primary-light);
+    --sl-color-accent-high: var(--primary-dark);
+    --sl-color-white: var(--light);
+    --sl-color-gray-1: var(--light-300);
+    --sl-color-gray-2: var(--light-200);
+    --sl-color-gray-3: #cccccc;
+    --sl-color-gray-4: #999999;
+    --sl-color-gray-5: #666666;
+    --sl-color-gray-6: var(--dark-300);
+    --sl-color-black: var(--dark);
+    --sl-color-text-accent: var(--primary-soft);
+    --sl-color-text-invert: var(--light);
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+    /* Backgrounds */
+    --bg-body: var(--dark);
+    --bg-nav: var(--dark);
+    --bg-sidebar: var(--dark-200);
+    --bg-card: var(--dark-200);
+    --bg-code: var(--dark-200);
+    --bg-selection: var(--primary-dark);
+
+    /* Text colors */
+    --text-body: var(--light);
+    --text-code: var(--primary-soft);
+    --text-heading: var(--primary-soft);
+    --text-muted: #8b949e; /* GitHub-style muted text */
+
+    /* Interactive elements */
+    --link-color: var(--primary-soft);
+    --link-hover: var(--primary-light);
+    --btn-primary-bg: var(--primary-soft);
+    --btn-primary-text: var(--dark);
+    --btn-secondary-bg: var(--keyword);
+    --btn-secondary-text: var(--light);
+
+    /* Borders */
+    --border-color: var(--dark-300);
+    --border-color-hover: var(--primary-soft);
+
+    /* Starlight theme variables */
+    --sl-color-accent: var(--primary-soft);
+    --sl-color-accent-low: var(--primary-light);
+    --sl-color-accent-high: var(--primary-dark);
+    --sl-color-white: var(--light);
+    --sl-color-gray-1: var(--light-300);
+    --sl-color-gray-2: var(--light-200);
+    --sl-color-gray-3: #cccccc;
+    --sl-color-gray-4: #999999;
+    --sl-color-gray-5: #666666;
+    --sl-color-gray-6: var(--dark-300);
+    --sl-color-black: var(--dark);
+    --sl-color-text-accent: var(--primary-soft);
+    --sl-color-text-invert: var(--dark);
+}
+
+/* Global styles */
+body {
+    background-color: var(--bg-body);
+    color: var(--text-body);
+}
+
+/* Typography with monospace influence */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text-heading);
+    font-weight: 600;
+    line-height: 1.3;
+    font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+h2 {
+    font-size: 2rem;
+    margin: 2rem 0 1rem;
+}
+h3 {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 0.75rem;
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--link-hover);
+}
+
+/* Code blocks with language-specific styling */
+code,
+pre {
+    font-family: "JetBrains Mono", "IBM Plex Mono", monospace;
+    font-size: 0.95em;
+}
+
+/* Code blocks */
+pre {
+    background-color: var(--bg-code);
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+/* Language badge for code blocks */
+pre[class*="language-"]::before {
+    content: attr(class);
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    background: var(--primary-soft);
+    color: var(--light);
+    border-bottom-left-radius: 4px;
+}
+
+/* Navigation */
+nav {
+    background-color: var(--bg-nav);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Sidebar */
+aside {
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+}
+
+/* Buttons */
+.btn,
+button {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn:hover,
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background-color: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+}
+
+/* Cards with technical appearance */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.card:hover {
+    border-color: var(--border-color-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Right sidebar TOC */
+.toc {
+    border-left: 1px solid var(--border-color);
+}
+
+.toc a {
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+}
+
+.toc a:hover,
+.toc a[aria-current="true"] {
+    color: var(--link-hover);
+}
+
+/* Selection */
+::selection {
+    background-color: var(--bg-selection);
+    color: var(--dark);
+}
+
+/* Starlight component overrides */
+.site-title {
+    color: var(--text-heading) !important;
+    font-weight: 700;
+}
+
+.sidebar-content {
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+}
+
+.nav-link {
+    font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
+    color: var(--text-muted) !important;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.nav-link[aria-current="page"],
+.nav-link:hover {
+    color: var(--light) !important;
+    background-color: var(--primary-soft) !important;
+    border-radius: 4px;
+}
+
+.content-panel {
+    background-color: var(--bg-body);
+}
+
+.hero {
+    padding: 4rem 0;
+    background-color: var(--bg-body);
+    position: relative;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(
+        45deg,
+        var(--primary) 0%,
+        var(--primary-soft) 35%,
+        var(--keyword) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.hero .tagline {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
+}
+
+/* Technical details list */
+.tech-details {
+    list-style: none;
+    padding: 0;
+}
+
+.tech-details li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.tech-details li::before {
+    content: "→";
+    color: var(--primary-soft);
+    margin-right: 0.5rem;
+    font-family: monospace;
+}
+
+/* API method styling */
+.api-method {
+    border-left: 3px solid var(--primary-soft);
+    padding-left: 1rem;
+    margin: 2rem 0;
+}
+
+.api-method h3 {
+    color: var(--text-heading);
+    font-family: "JetBrains Mono", monospace;
+    margin-bottom: 1rem;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero .tagline {
+        font-size: 1.2rem;
+    }
+
+    pre {
+        font-size: 0.9em;
+    }
+}
+
+/* Direct Starlight component overrides */
+:where(.astro-iz4icknw)[aria-current="page"],
+:where(.astro-iz4icknw)[aria-current="page"]:hover,
+:where(.astro-iz4icknw)[aria-current="page"]:focus {
+    font-weight: 600 !important;
+    color: var(--light) !important;
+    background-color: var(--primary-soft) !important;
+}
+
+/* Navigation links */
+.nav-link {
+    font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
+    color: var(--text-muted) !important;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.nav-link[aria-current="page"],
+.nav-link:hover {
+    color: var(--light) !important;
+    background-color: var(--primary-soft) !important;
+    border-radius: 4px;
+}
+
+/* Starlight navigation styles */
+.sl-sidebar-nav-item[aria-current="page"] {
+    font-weight: 600;
+    color: var(--sl-color-text-invert);
+    background-color: var(--sl-color-accent);
+    border-radius: 4px;
+}
+
+.sl-sidebar-nav-item:hover {
+    color: var(--sl-color-text-invert);
+    background-color: var(--sl-color-accent);
+    border-radius: 4px;
+}
+
+/* AGGRESSIVE Starlight navigation overrides */
+.sl-sidebar-nav-item,
+.sl-sidebar-nav-item a,
+.sl-sidebar-nav-item[aria-current="page"],
+.sl-sidebar-nav-item[aria-current="page"] a,
+.sl-sidebar-nav-item:hover,
+.sl-sidebar-nav-item:hover a {
+    color: var(--text-muted) !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.sl-sidebar-nav-item[aria-current="page"],
+.sl-sidebar-nav-item[aria-current="page"] a,
+.sl-sidebar-nav-item:hover,
+.sl-sidebar-nav-item:hover a {
+    color: var(--light) !important;
+    background-color: var(--primary-soft) !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+}
+
+/* Override any other potential selectors */
+[data-theme="light"] .sl-sidebar-nav-item[aria-current="page"],
+[data-theme="light"] .sl-sidebar-nav-item[aria-current="page"] a,
+[data-theme="light"] .sl-sidebar-nav-item:hover,
+[data-theme="light"] .sl-sidebar-nav-item:hover a {
+    color: var(--light) !important;
+    background-color: var(--primary-soft) !important;
+}
+
+[data-theme="dark"] .sl-sidebar-nav-item[aria-current="page"],
+[data-theme="dark"] .sl-sidebar-nav-item[aria-current="page"] a,
+[data-theme="dark"] .sl-sidebar-nav-item:hover,
+[data-theme="dark"] .sl-sidebar-nav-item:hover a {
+    color: var(--light) !important;
+    background-color: var(--primary-soft) !important;
+}
+
+/* Standard Starlight link button overrides */
+.sl-link-button,
+.sl-link-button.primary,
+.sl-link-button.secondary,
+.sl-link-button:not([disabled]):hover,
+.sl-link-button.primary:not([disabled]):hover,
+.sl-link-button.secondary:not([disabled]):hover {
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    transition: all 0.15s ease !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.5rem 1rem !important;
+    gap: 0.5rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    position: relative !important;
+    border: 1px solid transparent !important;
+    outline: none !important;
+}
+
+.sl-link-button.primary,
+.sl-link-button.primary:not([disabled]):hover {
+    background-color: var(--primary-soft) !important;
+    color: var(--light) !important;
+}
+
+.sl-link-button.primary:hover {
+    background-color: var(--primary-dark) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.sl-link-button.secondary,
+.sl-link-button.secondary:not([disabled]):hover {
+    background-color: var(--keyword) !important;
+    color: var(--light) !important;
+}
+
+.sl-link-button.secondary:hover {
+    background-color: #8a03d3 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Icon inside link button */
+.sl-link-button svg {
+    width: 1rem !important;
+    height: 1rem !important;
+    color: currentColor !important;
+    transition: transform 0.15s ease !important;
+}
+
+.sl-link-button:hover svg {
+    transform: translateX(2px) !important;
+}
+
+/* Focus state for accessibility */
+.sl-link-button:focus-visible {
+    box-shadow:
+        0 0 0 2px var(--bg-body),
+        0 0 0 4px var(--primary-soft) !important;
+}
+
+/* Light and dark theme specific styles */
+[data-theme="light"] .sl-link-button {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="dark"] .sl-link-button {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Button active state */
+.sl-link-button:active {
+    transform: translateY(1px) !important;
+    box-shadow: none !important;
+}
+
+/* Disabled state */
+.sl-link-button[disabled] {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+}

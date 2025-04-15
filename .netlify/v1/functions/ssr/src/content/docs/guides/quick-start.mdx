@@ -1,0 +1,130 @@
+---
+title: Quick Start Guide
+description: Get up and running with R2D2 in minutes
+---
+
+## Your First R2D2 Program
+
+After [installing R2D2](/guides/installation/), let's create your first program:
+
+1. Create a new project:
+```bash
+r2d2 new hello-world
+cd hello-world
+```
+
+2. Open `src/main.r2d2` in your editor and replace its contents with:
+
+```typescript
+module hello {
+  fn main() {
+    console.log("Hello, R2D2!");
+  }
+}
+```
+
+3. Run your program:
+```bash
+r2d2 run
+```
+
+## A More Complex Example
+
+Let's create a simple counter program:
+
+```typescript
+module counter {
+  fn count_to(max int) {
+    for var i int = 0; i < max; i++ {
+      console.log(i);
+    }
+  }
+
+  fn main() {
+    count_to(10);
+  }
+}
+```
+
+## Working with Variables
+
+R2D2 uses explicit variable declarations:
+
+```typescript
+module variables {
+  fn main() {
+    var name string = "R2D2";
+    var age int = 42;
+    var pi float = 3.14159;
+    var is_active bool = true;
+    
+    console.log("Name:", name);
+    console.log("Age:", age);
+    console.log("Pi:", pi);
+    console.log("Active:", is_active);
+  }
+}
+```
+
+## Functions and Modules
+
+Functions are grouped in modules:
+
+```typescript
+module math {
+  fn add(a int, b int) {
+    return a + b;
+  }
+
+  fn multiply(a int, b int) {
+    return a * b;
+  }
+
+  fn main() {
+    var sum = add(5, 3);
+    var product = multiply(4, 2);
+    
+    console.log("Sum:", sum);
+    console.log("Product:", product);
+  }
+}
+```
+
+## Control Flow
+
+R2D2 supports familiar control flow structures:
+
+```typescript
+module control_flow {
+  fn main() {
+    // If statement
+    var x int = 10;
+    if x > 5 {
+      console.log("x is greater than 5");
+    } else {
+      console.log("x is less than or equal to 5");
+    }
+
+    // For loop
+    for var i int = 0; i < 5; i++ {
+      console.log("Iteration:", i);
+    }
+
+    // While loop
+    var count int = 0;
+    while count < 3 {
+      console.log("Count:", count);
+      count++;
+    }
+  }
+}
+```
+
+## Next Steps
+
+Now that you've got a taste of R2D2, you can:
+
+1. Learn more about [Basic Concepts](/guides/basics/)
+2. Explore the [Standard Library](/reference/stdlib/)
+3. Try building some [Example Projects](/examples/)
+4. Join our [Community](/community/) 

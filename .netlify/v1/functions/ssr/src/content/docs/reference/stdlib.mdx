@@ -1,0 +1,187 @@
+---
+title: Standard Library
+description: Overview of R2D2's standard library modules and functionality
+---
+
+## Core Types
+
+Basic operations with core types:
+
+```typescript
+module core_examples {
+  // Result type for error handling
+  fn divide(a int, b int) {
+    if b == 0 {
+      return error("Division by zero");
+    }
+    return ok(a / b);
+  }
+
+  // Option type for nullable values
+  fn find_item(items []string, index int) {
+    if index < 0 || index >= items.length() {
+      return null;
+    }
+    return items[index];
+  }
+}
+```
+
+## Collections
+
+Working with arrays, maps and sets:
+
+```typescript
+module collections {
+  // Array operations
+  fn array_ops() {
+    var numbers = [1, 2, 3, 4, 5];
+    numbers.push(6);
+    numbers.pop();
+    
+    var filtered = numbers.filter(fn(n) { return n % 2 == 0; });
+    var doubled = numbers.map(fn(n) { return n * 2; });
+  }
+
+  // Map operations
+  fn map_ops() {
+    var scores = Map<string, int>{};
+    scores.set("Alice", 100);
+    scores.set("Bob", 85);
+    
+    if scores.has("Alice") {
+      console.log(scores.get("Alice"));
+    }
+  }
+
+  // Set operations
+  fn set_ops() {
+    var unique = Set<int>{};
+    unique.add(1);
+    unique.add(2);
+    unique.add(1);  // Ignored (already exists)
+    
+    console.log(unique.size());  // Prints: 2
+  }
+}
+```
+
+## IO & System
+
+File and console operations:
+
+```typescript
+module io {
+  fn async file_ops() {
+    // Write to file
+    match await fs.write_file("test.txt", "Hello, World!") {
+      ok(_) => console.log("File written"),
+      error(e) => console.error("Write error:", e)
+    }
+
+    // Read from file
+    match await fs.read_file("test.txt") {
+      ok(content) => console.log("Content:", content),
+      error(e) => console.error("Read error:", e)
+    }
+  }
+
+  fn console_ops() {
+    console.log("Info message");
+    console.error("Error message");
+    console.warn("Warning message");
+  }
+}
+```
+
+## Async Programming
+
+Working with promises and timers:
+
+```typescript
+module async_examples {
+  fn async fetch_data() {
+    match await http.get("https://api.example.com/data") {
+      ok(response) => return ok(response.json()),
+      error(e) => return error("Failed to fetch: " + e)
+    }
+  }
+
+  fn async delayed_operation() {
+    await time.sleep(1000);  // Sleep for 1 second
+    console.log("Operation completed");
+  }
+}
+```
+
+## Text Processing
+
+String and regex operations:
+
+```typescript
+module text {
+  fn string_ops() {
+    var text = "Hello, World!";
+    console.log(text.upper());  // HELLO, WORLD!
+    console.log(text.lower());  // hello, world!
+    console.log(text.trim());   // Hello, World!
+    
+    var parts = text.split(", ");
+    console.log(parts);  // ["Hello", "World!"]
+  }
+
+  fn regex_ops() {
+    var pattern = regex.compile("\\w+@\\w+\\.\\w+");
+    var email = "user@example.com";
+    
+    if pattern.matches(email) {
+      console.log("Valid email");
+    }
+  }
+}
+```
+
+## Math
+
+Mathematical operations:
+
+```typescript
+module math_examples {
+  fn basic_math() {
+    console.log(math.abs(-42));     // 42
+    console.log(math.max(10, 20));  // 20
+    console.log(math.min(10, 20));  // 10
+    console.log(math.pow(2, 3));    // 8
+  }
+
+  fn random_ops() {
+    console.log(math.random());        // Random float between 0 and 1
+    console.log(math.random_int(100)); // Random int between 0 and 99
+  }
+}
+```
+
+## Testing
+
+Unit testing utilities:
+
+```typescript
+module tests {
+  fn test_addition() {
+    assert.equal(1 + 1, 2, "1 + 1 should equal 2");
+    assert.not_equal(1 + 1, 3, "1 + 1 should not equal 3");
+  }
+
+  fn test_async async() {
+    var result = await fetch_data();
+    assert.ok(result, "Data should be fetched successfully");
+  }
+}
+```
+
+## Next Steps
+
+1. Explore [Core Types](/reference/types/)
+2. Learn about [Collections](/reference/collections/)
+3. See [IO & System](/reference/io/)
+4. Check [Async Programming](/reference/async/) 

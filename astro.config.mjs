@@ -2,10 +2,8 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
-
 import netlify from "@astrojs/netlify";
 
-// https://astro.build/config
 export default defineConfig({
   integrations: [
     starlight({
@@ -104,7 +102,28 @@ export default defineConfig({
   ],
   output: "server",
   adapter: netlify({
-    edgeMiddleware: true,
+    edgeMiddleware: false, // Switch to regular functions instead of edge functions
+    functionPerRoute: false,
+    builders: {
+      // Specific esbuild configuration for the Netlify function
+      directory: {
+        esbuildOptions: {
+          platform: "node",
+          format: "esm",
+          external: ["fs", "path", "url", "util", "crypto"],
+          define: {
+            "process.env.NODE_ENV": JSON.stringify("production"),
+          },
+        },
+      },
+    },
   }),
+  vite: {
+    build: {
+      target: "node20",
+    },
+    ssr: {
+      external: ["fs", "path", "url", "util", "crypto", "node:*"],
+    },
+  },
 });
-

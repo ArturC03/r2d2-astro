@@ -1,0 +1,85 @@
+---
+title: R2D2 Programming Language
+description: A modern, safe, and expressive programming language for building reliable applications
+template: splash
+hero:
+  tagline: A modern, unsafe, and expressive programming language for building unreliable applications
+  image:
+    file: ../../assets/rexDino.svg
+  actions:
+    - text: Get Started
+      link: /guides/quick-start/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/ArturC03/r2d2
+      icon: github
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Why R2D2?
+
+<CardGrid>
+	<Card title="Safe by Design" icon="shield-check">
+		Built-in error handling, null safety, and strong type system help prevent common programming mistakes.
+	</Card>
+	<Card title="Modern Features" icon="rocket">
+		Async/await, pattern matching, and first-class functions make complex tasks simple.
+	</Card>
+	<Card title="Expressive Syntax" icon="pencil">
+		Clean, readable syntax that focuses on developer productivity and code maintainability.
+	</Card>
+	<Card title="Reliable Performance" icon="speedometer">
+		Efficient compilation and runtime optimizations ensure your code runs fast.
+	</Card>
+</CardGrid>
+
+## Quick Example
+
+```typescript
+module hello {
+	fn greet(name string) {
+		match validate_name(name) {
+			ok(valid_name) => console.log("Hello,", valid_name),
+			error(msg) => console.error("Error:", msg)
+		}
+	}
+
+	fn validate_name(name string) {
+		if name.length() == 0 {
+			return error("Name cannot be empty");
+		}
+		return ok(name);
+	}
+
+	fn main() {
+		greet("R2D2");  // Prints: Hello, R2D2
+		greet("");      // Prints: Error: Name cannot be empty
+	}
+}
+```
+
+## Get Started
+
+Ready to try R2D2? Follow our quick start guide to write your first program:
+
+<CardGrid>
+	<Card title="Installation" icon="download">
+		Learn how to install R2D2 on your system.
+		[Install Now →](/guides/installation/)
+	</Card>
+	<Card title="Quick Start" icon="open-book">
+		Write your first R2D2 program in minutes.
+		[Start Learning →](/guides/quick-start/)
+	</Card>
+	<Card title="Examples" icon="document">
+		Explore example projects and code snippets.
+		[View Examples →](/examples/)
+	</Card>
+	<Card title="Documentation" icon="document">
+		Dive into the comprehensive language reference.
+		[Read Docs →](/reference/introduction/)
+	</Card>
+</CardGrid>

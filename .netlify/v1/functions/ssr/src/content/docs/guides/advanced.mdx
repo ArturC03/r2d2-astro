@@ -1,0 +1,259 @@
+---
+title: Advanced R2D2 Features
+description: Explore advanced features and patterns in the R2D2 programming language
+---
+
+## Generics
+
+R2D2 supports generic types and functions for writing reusable code:
+
+### Generic Functions
+
+```typescript
+fn identity<T>(value: T): T {
+    return value;
+}
+
+// Usage
+let num = identity<i32>(42);
+let text = identity<string>("Hello");
+```
+
+### Generic Interfaces
+
+```typescript
+interface Container<T> {
+    fn get(): T;
+    fn set(value: T): void;
+}
+
+module Box<T> implements Container<T> {
+    let value: T;
+    
+    fn get(): T {
+        return value;
+    }
+    
+    fn set(newValue: T): void {
+        value = newValue;
+    }
+}
+```
+
+### Generic Constraints
+
+```typescript
+interface Numeric {
+    fn toNumber(): f64;
+}
+
+fn sum<T: Numeric>(values: T[]): f64 {
+    let total = 0.0;
+    for value in values {
+        total += value.toNumber();
+    }
+    return total;
+}
+```
+
+## Pattern Matching
+
+R2D2 provides powerful pattern matching capabilities:
+
+```typescript
+enum Shape {
+    Circle(f64),              // radius
+    Rectangle(f64, f64),      // width, height
+    Triangle(f64, f64, f64)   // sides
+}
+
+fn calculateArea(shape: Shape): f64 {
+    match shape {
+        Circle(r) => PI * r * r,
+        Rectangle(w, h) => w * h,
+        Triangle(a, b, c) => {
+            let s = (a + b + c) / 2.0;
+            (s * (s - a) * (s - b) * (s - c)).sqrt()
+        }
+    }
+}
+```
+
+### Pattern Guards
+
+```typescript
+fn describe(n: i32): string {
+    match n {
+        x if x < 0 => "negative",
+        x if x == 0 => "zero",
+        x if x % 2 == 0 => "positive even",
+        _ => "positive odd"
+    }
+}
+```
+
+## Decorators
+
+Decorators provide a way to modify or enhance classes, methods, and functions:
+
+```typescript
+// Decorator definition
+fn log(target: Function): Function {
+    return (...args: any[]): any => {
+        console.log("Calling function with args:", args);
+        let result = target(...args);
+        console.log("Function returned:", result);
+        return result;
+    };
+}
+
+// Using decorators
+@log
+fn add(a: i32, b: i32): i32 {
+    return a + b;
+}
+
+// Class decorators
+@singleton
+module Database {
+    fn connect(): void {
+        // Implementation
+    }
+}
+```
+
+## Advanced Types
+
+### Union Types
+
+```typescript
+type NumberOrString = i32 | string;
+
+fn process(value: NumberOrString): string {
+    match value {
+        i32 => value.toString(),
+        string => value
+    }
+}
+```
+
+### Intersection Types
+
+```typescript
+interface Loggable {
+    fn log(): void;
+}
+
+interface Serializable {
+    fn serialize(): string;
+}
+
+type LoggableAndSerializable = Loggable & Serializable;
+```
+
+### Type Aliases
+
+```typescript
+type UserId = i32;
+type UserMap = Map<UserId, User>;
+type Callback<T> = fn(value: T): void;
+```
+
+## Asynchronous Programming
+
+### Async Iterators
+
+```typescript
+async fn* generateNumbers(): AsyncIterator<i32> {
+    for i in 0..5 {
+        await delay(1000);
+        yield i;
+    }
+}
+
+async fn processNumbers() {
+    for await num in generateNumbers() {
+        console.log(num);
+    }
+}
+```
+
+### Custom Async Types
+
+```typescript
+interface AsyncResult<T> {
+    fn then<U>(fn(T): Promise<U>): AsyncResult<U>;
+    fn catch<E>(fn(Error): Promise<E>): AsyncResult<E>;
+}
+
+module AsyncOperation<T> implements AsyncResult<T> {
+    // Implementation
+}
+```
+
+## Memory Management
+
+### Reference Counting
+
+```typescript
+module RefCounted<T> {
+    let value: T;
+    let count: i32;
+    
+    fn new(value: T): RefCounted<T> {
+        return RefCounted { value, count: 1 };
+    }
+    
+    fn clone(): RefCounted<T> {
+        count += 1;
+        return this;
+    }
+    
+    fn drop(): void {
+        count -= 1;
+        if count == 0 {
+            // Clean up resources
+        }
+    }
+}
+```
+
+## Metaprogramming
+
+### Compile-Time Function Execution
+
+```typescript
+const fn factorial(n: i32): i32 {
+    if n <= 1 {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+const FACT_5 = factorial(5);  // Computed at compile time
+```
+
+### Type Reflection
+
+```typescript
+fn getTypeName<T>(): string {
+    return typeOf<T>();
+}
+
+interface TypeInfo {
+    name: string;
+    methods: string[];
+    properties: string[];
+}
+
+fn inspect<T>(): TypeInfo {
+    // Implementation using reflection
+}
+```
+
+## Next Steps
+
+1. Explore [Design Patterns](/guides/patterns/) in R2D2
+2. Learn about [Performance Optimization](/guides/performance/)
+3. Read about [Testing Strategies](/guides/testing/)
+4. Check out [Advanced Examples](/examples/advanced/) 

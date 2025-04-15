@@ -3,6 +3,8 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwind from "@astrojs/tailwind";
 
+import netlify from "@astrojs/netlify";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -11,9 +13,7 @@ export default defineConfig({
       social: {
         github: "https://github.com/ArturC03/r2d2",
       },
-      customCss: [
-        './src/styles/custom.css',
-      ],
+      customCss: ["./src/styles/custom.css"],
       sidebar: [
         {
           label: "Getting Started",
@@ -75,31 +75,36 @@ export default defineConfig({
       ],
       head: [
         {
-          tag: 'link',
+          tag: "link",
           attrs: {
-            rel: 'preconnect',
-            href: 'https://fonts.googleapis.com',
+            rel: "preconnect",
+            href: "https://fonts.googleapis.com",
           },
         },
         {
-          tag: 'link',
+          tag: "link",
           attrs: {
-            rel: 'preconnect',
-            href: 'https://fonts.gstatic.com',
+            rel: "preconnect",
+            href: "https://fonts.gstatic.com",
             crossorigin: true,
           },
         },
         {
-          tag: 'link',
+          tag: "link",
           attrs: {
-            rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap',
+            rel: "stylesheet",
+            href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap",
           },
         },
       ],
     }),
     tailwind({
-      applyBaseStyles: false
+      applyBaseStyles: false,
     }),
   ],
+  output: "server",
+  adapter: netlify({
+    edgeMiddleware: true,
+  }),
 });
+
